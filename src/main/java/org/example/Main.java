@@ -26,7 +26,7 @@ public class Main {
                     inputPrices();
                     break;
                 case "2":
-                    //choice 2
+                    calculateStats(prices);
                     break;
                 case "3":
                     //choice 3
@@ -41,7 +41,7 @@ public class Main {
                     System.out.println("Ogiltigt val, försök igen.");
             }
 
-        }while (choice.equalsIgnoreCase("e"));
+        }while (!choice.equalsIgnoreCase("e"));
     }
 
     private static void inputPrices() {
@@ -60,5 +60,31 @@ public class Main {
                 }
             }
         }
+    }
+
+    private static void calculateStats(int[] prices) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int mid = 0;
+        int sum = 0;
+        int minIndex = 0;
+        int maxIndex = 0;
+
+        for (int i = 0; i < prices.length; i++) {
+            sum += 0;
+            if(prices[i] < min) {
+                min = prices[i];
+                minIndex = i;
+            }
+            if(prices[i] > max) {
+                max = prices[i];
+                maxIndex = i;
+            }
+            mid = sum / prices.length;
+        }
+
+        System.out.println("Lägsta pris: " + min + " öre, klockan: " + minIndex + ".");
+        System.out.println("Högsta pris: " + max + " öre, klockan: " + maxIndex + ".");
+        System.out.println("Medelpriset på dygnet: " + mid + ".");
     }
 }
