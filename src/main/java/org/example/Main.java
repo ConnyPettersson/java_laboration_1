@@ -1,8 +1,12 @@
 package org.example;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Main {
+
+    static Scanner sc = new Scanner(System.in);
+    static int[] prices = new int[24];
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
          String choice;
 
@@ -19,7 +23,7 @@ public class Main {
 
             switch (choice.toLowerCase()) {
                 case "1":
-                    //choice 1
+                    inputPrices();
                     break;
                 case "2":
                     //choice 2
@@ -38,5 +42,23 @@ public class Main {
             }
 
         }while (choice.equalsIgnoreCase("e"));
+    }
+
+    private static void inputPrices() {
+        System.out.println("Ange priser för varje timme i hela ören: ");
+
+        for (int i = 0; i < prices.length; i++) {
+            boolean validInput = false;
+            while (!validInput) {
+                System.out.printf("Pris mellan %02d-%02d: ", i, i + 1);
+
+                try{
+                    prices[i] = sc.nextInt();
+                    validInput = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("Ogiltig inmatning, endast heltal är tillåtna.");
+                }
+            }
+        }
     }
 }
