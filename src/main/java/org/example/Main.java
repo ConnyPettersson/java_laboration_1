@@ -1,6 +1,9 @@
 package org.example;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.List;
 public class Main {
 
     static Scanner sc = new Scanner(System.in);
@@ -29,13 +32,13 @@ public class Main {
                     calculateStats(prices);
                     break;
                 case "3":
-                    //choice 3
+                    sortPrices();
                     break;
                 case "4":
                     //choice 4
                     break;
                 case "e":
-                    // choice e
+                    System.out.println("Programmet avslutas...");
                     break;
                 default:
                     System.out.println("Ogiltigt val, försök igen.");
@@ -71,7 +74,7 @@ public class Main {
         int maxIndex = 0;
 
         for (int i = 0; i < prices.length; i++) {
-            sum += 0;
+            sum += prices[i];
             if(prices[i] < min) {
                 min = prices[i];
                 minIndex = i;
@@ -85,6 +88,37 @@ public class Main {
 
         System.out.println("Lägsta pris: " + min + " öre, klockan: " + minIndex + ".");
         System.out.println("Högsta pris: " + max + " öre, klockan: " + maxIndex + ".");
-        System.out.println("Medelpriset på dygnet: " + mid + ".");
+        System.out.println("Medelpriset på dygnet: " + mid + " öre.");
+    }
+
+    private static void sortPrices() {
+        List<HourPrice> hourPrices = new ArrayList<>();
+
+        for (int i = 0; i < prices.length; i++) {
+            hourPrices.add(new HourPrice(prices[i],  i));
+        }
+
+        Collections.sort(hourPrices);
+
+        System.out.println("Priser sorterade från lägsta till högsta: ");
+
+        for (HourPrice hp : hourPrices) {
+            System.out.printf("%02d-%02d %d öre\n", hp.hour, hp.hour + 1, hp.price);
+        }
+    }
+
+    static class HourPrice implements Comparable<HourPrice> {
+        int price;
+        int hour;
+
+        HourPrice(int price, int hour) {
+            this.price = price;
+            this.hour  = hour;
+        }
+
+        @Override
+        public int compareTo(HourPrice other) {
+            return Integer.compare(this.price, other.price);
+        }
     }
 }
