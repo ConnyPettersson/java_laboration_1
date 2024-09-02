@@ -35,7 +35,7 @@ public class Main {
                     sortPrices();
                     break;
                 case "4":
-                    //choice 4
+                    bestStartTime();
                     break;
                 case "e":
                     System.out.println("Programmet avslutas...");
@@ -120,5 +120,28 @@ public class Main {
         public int compareTo(HourPrice other) {
             return Integer.compare(this.price, other.price);
         }
+    }
+
+    private static void bestStartTime() {
+        int currentPrice = 0;
+        int minPrice = Integer.MAX_VALUE;
+        int bestStartHour = 0;
+
+        for (int i = 0; i < 4; i++) {
+            currentPrice += prices[i];
+        }
+
+        minPrice = currentPrice;
+
+        for(int i = 1; i < 21; i++) {
+            currentPrice =  currentPrice - prices[i - 1] + prices[i + 3];
+
+            if(currentPrice < minPrice) {
+                minPrice = currentPrice;
+                bestStartHour = i;
+            }
+        }
+
+        System.out.println("Billigaste laddningstid (4h) är kl " + bestStartHour + " till " + (bestStartHour + 3) + " med en totalkostnad på " + minPrice + " öre.");
     }
 }
